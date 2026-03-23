@@ -1,0 +1,80 @@
+
+<dialog class="container-fluid popup-dialog" id="uploadFileFormModal">
+	<div class="modal-dialog">
+		<div class="modal-content">	
+			<div class="modal-header text-center">
+				
+				<h4 class="modal-title">Upload Transaction File</h4>
+			</div>									
+			<div class="modal-body">
+                <form role="form" id="uploadFileForm" class="form-horizontal">
+                    <div class="container-fluid row">								    			    			    	
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">	 							
+                                <label for="vendor" class="control-label"><span class="small">Vendor : </span></label>							      	
+                                <!-- <input type="text" name="vendor" id="vendor" class="form-control" title="This field should not be left blank." data-error-msg="Enter valid Vendor Name" required>	 -->
+								<select id="vendor" class="form-control input-sm" style="min-width:50px;">
+									<option value="ADITHYABIRLA">ADITHYABIRLA</option>
+									<option value="SHRIRAM">SHRIRAM</option>
+									<option value="FUTUREGENERAL">FUTUREGENERAL</option>
+									<option value="LIBERTYGENERAL">LIBERTYGENERAL</option>								
+								</select>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>	  									
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">	 							
+                                <label for="year" class="control-label"><span class="small">Year : </span></label>							      	
+                                <input type="text" name="year" id="year" class="form-control" title="This field should not be left blank." data-error-msg="Enter valid year" required>	
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>	  									
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">	 							
+                                <label for="month" class="control-label"><span class="small">Month : </span></label>							      	
+                                <input type="text" name="month" id="month" class="form-control" title="This field should not be left blank." data-error-msg="Enter valid Month" required>	
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>	  									
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div id="select_file" class="form-group has-feedback" style="padding-right: 10px;">	 							
+                                <label for="file" class="control-label"><span class="small">File : </span></label>							      	
+                                <input type="file" name="file" id="vendor_trans_file" class="form-control" title="This field should not be left blank." data-error-msg="Enter valid file" required>	
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>	  									
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">		                  			 
+                                <button type="submit" class="btn btn-primary btn-xs pull-right" onclick="uploadfile()">Upload</button>	                  		  		
+                            </div>
+                        </div>
+                    </div>
+                </form>
+			</div>				
+		</div>
+	</div>						
+</dialog>
+
+	<!-- <hr>
+	<div class="row">		
+		<div class="col-xs-12 controls text-right"> 
+			<button id="btn-create" type="button" class="btn btn-primary btn-sm" disabled onclick="openCreateInvoice()">Download Invoice</button>
+		</div>
+	</div> -->
+	<hr>
+    <div class="row">					    		
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<div>
+				<div style="display:none;" id="error" class="error-content text-danger error-alert alert alert-danger col-xs-12"></div>
+				<div style="display:none;" id="success" class="error-content text-success success-alert alert alert-success col-xs-12"></div>   		
+			</div>
+		</div>
+	</div>
+</div>
+				
+<script type="text/javascript" src="js/vendorinvoicetrans.js"></script>
+	

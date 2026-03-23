@@ -1,0 +1,39 @@
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+	background-color: #F5F5F5;
+	cursor:pointer;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background: rgba(0,0,0,0.05);
+    border: 1px solid #ccc;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: rgba(0,0,0,0.1);
+    border: 1px solid #aaa;
+    cursor:pointer;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.1);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(left, #22ADD4, #1E98BA);
+}
+
+.modal {
+  overflow: auto !important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

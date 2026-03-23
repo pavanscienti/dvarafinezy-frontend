@@ -1,0 +1,282 @@
+<html>
+<!--  js files -->
+<script src="/lib/jquery/3.7.0/js/jquery.min.js"></script>
+<!-- ImageViewer -->
+<link rel="stylesheet" href="/lib/image-viewer/css/imageviewer.v1.css" />
+<script src="/lib/image-viewer/js/imageviewer.v1.js"></script>
+<link rel="stylesheet" href="/lib/bootstrap/3.3.7/css/bootstrap.min.css" />	
+
+
+<script>
+	var imageViewer = null;
+	var paginationPosition = 0;
+	var docId = location.hash.replace(/^#/, '');
+
+	$(document).ready(function () {
+		try {
+			loadContentData();
+		} catch (err) {
+			// alert('Error while rendering data' + err);
+		}
+	});
+	function loadContentData() {
+		var params = { "option": 'getContentData', "_id": docId};
+		doAPIRequest("GET", '/vengine/fms/TrainingModule', params, function (json) {
+			if (json && json.status_code == '200') {
+				// $("#view_content_data > div").text(json.data);
+				renderContentData(json.data, docId);
+			} else {
+				// alert(json.status_txt);
+			}
+		});
+	}
+
+	function doAPIRequest(method, url, params, callback, dataType) {	
+		var reqHeader = {};
+		if(localStorage && localStorage.token){
+			reqHeader['token'] = localStorage.token;
+		}
+		var ajaxReq = {
+			url: url,
+			type: method,
+			headers: reqHeader,	    
+			cached: false,
+			success: function(response, status, xhr) {
+				if(callback != null) {
+					callback(response, status, xhr);
+				} 					        
+			},
+			error: function(response) {
+				if(callback != null) {
+					callback(response);
+				}
+			}
+		};
+			
+		if(dataType == 'json') {
+			ajaxReq.dataType = 'json';
+			ajaxReq.contentType = 'application/json; charset=utf-8';
+			if(params) ajaxReq.data = (typeof params === 'string') ? params : JSON.stringify(params);
+		} else if(params) {
+			ajaxReq.data = params;
+		}
+		$.ajax(ajaxReq);
+	}
+
+	function getUrlBLOB(fileId) {
+		return fileId ? "/vengine/cms/base64?option=base64ImgCloud&image=1&name=" + fileId : "/fms/images/spiner.gif";
+	}
+
+	function showImageViewer(url) {
+		// imageViewer.show(url, url);
+		var image = new Image();
+		image.src = url;
+		var viewer = new Viewer(image, {
+			loop: false,
+			backdrop: false,
+			navbar: false,
+			hidden: function () { viewer.destroy(); },
+		});
+		viewer.show();
+	}
+	function renderContentData(data, _id) {
+		var viewContainer = $("#view_content_data > div");
+		if (data.length > 0) { 
+			$("#view_content_data").show();
+			for (var index=0;index<data.length;index++) {				
+				var obj = data[index];
+				var view = "";
+				view += "<div class=\"list-item panel panel-default\" \">";
+				view += "<div class=\"panel-heading\">";
+				var displayName = (obj.process_display_name != "" && (typeof obj.process_display_name != "undefined")) ? obj.process_display_name : obj.process_name;
+				view += "<h4>" + displayName + "</h4>"
+				view += "</div>";
+				view += "<div class=\"panel-body\">";
+				view += "<div style=\"\" class=\"row\">"
+				view += "<div class=\"col-md-12 col-sm-12 \" >";
+				view += "<span>" + obj.process_desc + "</span>";
+				view += "</div>";
+				view += "</div>";
+				view += "<div class=\"row\">";
+				view += "<div class=\"col-md-12 col-sm-12 \" >";
+				/*attachments data*/
+				var attachments = obj.attachments;
+				if (typeof attachments != "undefined") {
+					for (var i = 0; i < attachments.length; i++) {
+						var attObj = attachments[i];
+						var name = attObj.name;
+						if (attObj.type) {
+							var fileId = attObj.file_id;
+							var fileType = attObj.type;
+							var nameStr = "'" + name + "'";
+
+							var url = getUrlBLOB(fileId);
+							//var base64 = getBase64ImageUrl(url);
+							//attObj["base64"] = base64.split(',')[1];
+							view += "<div class=\"row\">";
+							view += "<div class=\"col-md-12\" style=\'display:block; margin-top:1px; margin-bottom:1px;\'>";
+							view += "<div class=\"row\">";
+							view += "<div class=\"col-md-12\">";
+							view += "<img  alt=\"\" onclick=\"showImageViewer(this.src)\" class=\"form-control thumb-img-loader\" style=\"cursor: pointer;max-width:85%;height:auto;margin-bottom: 10px;margin-top: 10px; \"  src=\"" + url + "\" >";
+
+							view += "</div>";
+
+							view += "</div>";
+							view += "<div class=\"row\" style=\"margin-left:10px;\">" +
+								"<div class=\"col-md-2\" style=\"text-align:left;\"> " +
+								"<div class=\"row\"><span style=\"font-size:10px;color:#337ab7\">( Click here to enlarge )</span> </div>" +
+								"<div class=\"row\"><span style=\"font-size:16px;\"><i>" + name + "</i></span> </div>" +
+								"</div>" +
+								"</div>";
+							view += '</div>';
+							view += '</div>';
+						} else {
+							var link = attObj.link;
+							var linkType = (typeof attObj.link_type == 'undefined') ? "" : attObj.link_type;
+							if (linkType == 'image') {
+								view += "<div class=\"row\">";
+								view += "<div class=\"col-md-12\" style=\'display:block; margin-top:1px; margin-bottom:1;\'>";
+								view += "<div class=\"row\">";
+								view += "<div class=\"col-md-12\">";
+								view += "<img  alt=\"\" onclick=\"showImageViewer(this.src)\" class=\"form-control thumb-img-loader\" style=\"cursor: pointer;max-width:85%;height:auto;margin-bottom: 10px;margin-top: 10px;\"  src=\"" + link + "\" >";
+								view += "</div>";
+								view += "</div>";
+								view += "<div class=\"row\" style=\"margin-left:10px;\">" +
+									"<div class=\"col-md-2\" style=\"text-align:left;\"> " +
+									"<div class=\"row\"><span style=\"font-size:10px;color:#337ab7\">( Click here to enlarge )</span> </div>" +
+									"<div class=\"row\"><span style=\"font-size:16px;\"><i>" + name + "</i></span> </div>" +
+									"</div>" +
+									"</div>";
+								view += '</div>';
+								view += '</div>';
+							} else if (linkType == 'video') {
+								view += "<div class=\"row\" id=\"video-container\">";
+								view += "<div class=\"col-md-12\" style=\'display:block; margin-top:1px; margin-bottom:1px;\'>";
+								view += "<div class=\"row\">";
+								view += "<div class=\"col-md-12\">";
+								var videoId = link.split("=")[1];
+
+								view += "<video style=\"max-width:85%;height:auto;margin-bottom: 10px;margin-top: 10px;\" controls> ";
+
+								view += "<source src=\"" + link + "\" type='video/mp4; codecs=\"avc1.42E01E, mp4a.40.2\"'>";
+								view += "<source src=\"" + link + "\" type='video/ogg; codecs=\"theora, vorbis\"'>";
+								view += "</video>"
+								view += "</div>";
+								view += "</div>";
+								view += "<div class=\"row\" style=\"margin-left:10px;\">" +
+									"<div class=\"col-md-4\" style=\"text-align:left;\"> " +
+
+									"<div class=\"row\"><span style=\"font-size:16px;\"><i>" + name + "</i></span> </div>" +
+									"</div>" +
+									"</div>";
+								view += '</div>';
+								view += '</div>';
+							}
+						}
+
+					}
+				}
+				view += "</div>";				
+				/*Section datas 23-10-2018 change*/
+				var sectionsAttachment = obj.sub_process;
+				if (typeof sectionsAttachment != "undefined") {
+					for (var i = 0; i < sectionsAttachment.length; i++) {
+						var subProcessObj = sectionsAttachment[i];
+						var sectionActivityArr = subProcessObj.section_activity;
+						if (typeof sectionActivityArr != "undefined" && sectionActivityArr.length != 0) {
+							for (var j = 0; j < sectionActivityArr.length; j++) {
+								var tempObj = sectionActivityArr[j];
+								var position = j + 1;
+								view += "<div class=\"row \" style=\"padding-left: 15px;\">";
+								view += "<div class=\"col-md-12 col-sm-12 \" >";
+								view += "<div class=\"row\" style=\"padding-left: 15px;\">";
+								view += "<span><b>" + tempObj.section_process_name + "</b></span>"
+								view += "</div>";
+								view += "<div class=\"row\" style=\"padding-top: 10px;\">";
+								view += "<div class=\"col-md-12 col-sm-12 \" >";
+								view += "<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + tempObj.section_process_desc + "</span>";
+								view += "</div>";
+								view += "</div>";
+								var attachmentsArr = tempObj.section_attachments;
+								if (typeof attachmentsArr != "undefined") {
+									for (var k = 0; k < attachmentsArr.length; k++) {
+										var attObj = attachmentsArr[k];
+										var name = attObj.name;
+										if (attObj.hasOwnProperty('type')) {
+											var fileId = attObj.file_id;
+											var fileType = attObj.type;
+											var nameStr = "'" + name + "'";
+
+											var url = getUrlBLOB(fileId);
+											//let base64 = getBase64ImageUrl(url);
+											//attObj["base64"] = base64.split(',')[1];
+											view += "<div class=\"row\">";
+											view += "<div class=\"col-md-12\" style=\'display:block; margin-top:1px; margin-bottom:1px;\'>";
+											view += "<div class=\"row\">";
+											view += "<div class=\"col-md-12\">";
+											view += "<img  alt=\"\" onclick=\"showImageViewer(this.src)\" class=\"form-control thumb-img-loader\" style=\"cursor: pointer;width:85%;height:auto;margin-bottom: 0px;margin-top: 10px; \"  src=\"" + url + "\" >";
+											view += "</div>";
+											view += "</div>";
+											view += "<div class=\"row\" style=\"margin-left:10px;margin-top:10px;\">" +
+												"<div class=\"col-md-2\" style=\"text-align:left;\"> " +
+												"<div class=\"row\"><span style=\"font-size:10px;color:#337ab7\">( Click here to enlarge )</span> </div>" +
+												"<div class=\"row\"><span style=\"font-size:16px;\"><i>" + name + "</i></span> </div>" +
+												"</div>" +
+												"</div>";
+											view += '</div>';
+											view += '</div>';
+										} else {
+											var link = attObj.link;
+											var linkType = (typeof attObj.link_type == 'undefined') ? "" : attObj.link_type;
+											if (linkType == 'image') {
+												view += "<div class=\"row\">";
+												view += "<div class=\"col-md-12\" style=\'display:block; margin-top:1px; margin-bottom:1px;\'>";
+												view += "<div class=\"row\">";
+												view += "<div class=\"col-md-12\">";
+												view += "<img  alt=\"\" onclick=\"showImageViewer(this.src)\" class=\"form-control thumb-img-loader\" style=\"cursor: pointer;width:85%;height:auto;margin-bottom: 0px;margin-top: 10px; \"  src=\"" + link + "\" >";
+												view += "</div>";
+												view += "</div>";
+												view += "<div class=\"row\" style=\"margin-left:10px;margin-top:10px;\">" +
+													"<div class=\"col-md-2\" style=\"text-align:left;\"> " +
+													"<div class=\"row\"><span style=\"font-size:10px;color:#337ab7\">( Click here to enlarge )</span> </div>" +
+													"<div class=\"row\"><span style=\"font-size:16px;\"><i>" + name + "</i></span> </div>" +
+													"</div>" +
+													"</div>";
+												view += '</div>';
+												view += '</div>';
+											}
+										}
+									}
+								}
+
+								view += "</div>";
+								view += "</div>";
+
+							}
+						}
+					}
+				}
+
+				view += "</div>"
+				view += "</div>";
+				view += "</div>";
+				viewContainer.append(view);
+			}
+		} else {
+			viewContainer.html("<center>No Contents Found.</center>");
+		}
+	}
+
+	function showLoader(isVisible){
+
+	}
+
+</script>
+
+<body>
+	<div id="view_content_data" class="container">
+		<div style=""></div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sign-In Integration</title>
+   
+</head>
+<body>
+    <!-- Google Sign-In Button -->
+    <!-- <div id="g_id_onload"
+         data-client_id="677059990414-l97h0a5hqmmima2sdfonaht50fnp54tf.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div> -->
+
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add your initialization code here
+            console.log('DOM fully loaded and parsed');
+
+            // Your doSSOLogin function
+            function doSSOLogin() {
+                // Open the authentication window
+                const authWindow = window.open('https://finezyuat.dvarakgfs.com/login', 'authWindow', 'width=600,height=400');
+
+                // Add an event listener to handle the message from the popup
+                window.addEventListener('message', function(event) {
+                    if (event.origin !== window.location.origin) {
+                        return;
+                    }
+
+                    const data = event.data;
+                    if (data && data.type === 'AUTH_SUCCESS') {
+                        document.getElementById('result').innerText = `User: ${data.username}, Token: ${data.token}`;
+                        if (authWindow) {
+                            authWindow.close();
+                        }
+                    }
+                }, false);
+
+                return false;
+            }
+
+            // Attach the function to the button (if needed)
+            document.querySelector('.login-with-google-btn').onclick = doSSOLogin;
+        });
+    </script>
+</body>
+</html>

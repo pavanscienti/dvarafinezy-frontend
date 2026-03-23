@@ -1,0 +1,40 @@
+.portfolio caption {
+  background: #dbb768;
+  font-weight: bold;
+  font-size: 40px;
+  padding: 450px;
+  border: 1px solid #fff;
+}
+
+.portfolio table,.portfolio td {
+	text-align: center;
+	border: 1px solid black;
+    transition:all 2s;
+    word-wrap:break-word;
+}
+
+.portfolio th {
+	padding: 8px;
+	white-space: nowrap;
+    background-color: #0191C8;
+    color: white;
+    text-align: center;
+    }
+.portfolio tr:nth-child(even) {
+	background: #DCDCDC;
+	}
+.portfolio tr:nth-child(odd) {
+	background: #F4F7EC;;
+	}
+.portfolio td:nth-child(even) {
+	 font-weight: bold;
+     color: #0191C8;
+	}
+.portfolio td:nth-child(odd) {
+	 font-weight: bold;
+     color: #0191C8;
+	}
+.portfolio .btn{
+	/* margin-top: 4px; */
+	 width: 108px;
+}

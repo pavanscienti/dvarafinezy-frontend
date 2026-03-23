@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+  		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Statement</title>
+	</head>
+	<body>
+		<div class="row">					    		
+		    <div class="col-xs-12">
+		    	<div>
+		    		<h3 class="pull-left" style="margin-top: 10px;">AEPS Transaction</h3>
+		    		
+    				<div class="pull-right form-inline" >    					
+    					<div class="input-group input-daterange  datepicker" data-provide="datepicker" data-date-default-date="now" data-date-end-date="now" data-date-autoclose="true" data-date-format="yyyy-mm-dd">
+						    <div class="input-group-addon">
+						        <span class="glyphicon glyphicon-calendar"></span>
+						    </div>
+						    <input type="text" name="date_from" id="date_from" class="form-control"  >
+						    <div class="input-group-addon"> to </div>
+						    <input type="text" name="date_to" id="date_to" class="form-control"  >						    						    
+						</div>
+						<button class="btn btn-sm btn-primary" onclick="getStatement()">View</button>
+						<button class="btn btn-sm btn-primary" onclick="download()">Download</button>
+					</div>	
+		    	</div>
+		    </div>
+		</div>
+		<hr>		
+		<div class="row">
+			<div class="col-xs-12">
+		      	<div class="table-responsive">
+		      		<table id="tbl-stmt" class="table table-striped table-bordered">
+		      			<thead>
+		      				<tr>
+		      					<th class="text-center">S.No</th>		      					
+								<th class="text-center" nowrap="nowrap">Trxn No</th>		
+								<th class="text-center" nowrap="nowrap">Ref No</th>
+								<th class="text-center" nowrap="nowrap">Trxn Date</th>
+								<th class="text-center">Emp Code</th>
+								<th class="text-center">CSR Id</th>
+								<th class="text-center" nowrap="nowrap">Name</th>
+								<th class="text-center">Terminal Id</th>
+								<th class="text-center" nowrap="nowrap">Aadhaar</th>								
+								<th class="text-center" nowrap="nowrap">Mobile No</th>
+								<th class="text-center" nowrap="nowrap">Bank IIN</th>
+								<th class="text-center">trxn_amount</th>
+								<th class="text-center">Resp Code</th>
+								<th class="text-center">Trxn Type</th>
+								<th class="text-center">Error Description</th>
+								
+		      				</tr>
+		      			</thead>
+		      			<tbody>
+		      				<tr>
+		      					<td class="text-center" colspan="14">Click view button to see the transactions!</td>
+	      					</tr>
+		      			</tbody>
+		      		</table> 
+		      	</div>
+	      	</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/aeps-trxn-stmt.js"></script>
+</html>

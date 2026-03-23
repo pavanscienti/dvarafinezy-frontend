@@ -1,0 +1,89 @@
+
+/* dialog style */
+
+dialog .modal-dialog{
+	padding: 0px;
+	margin: 0px;
+}
+
+dialog{
+  	background: #FFF;
+  	text-align: center;
+  	margin: 1em auto;
+  	padding: 0px;
+  	border: 0;
+  	border-top: 5px solid #9c3143;
+  	box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+dialog::backdrop {
+  	position: fixed;
+  	top: 0;
+  	left: 0;
+ 	right: 0;
+  	bottom: 0;
+  	background-color: rgba(0, 0, 0, 0.6);
+}
+
+dialog[open] {
+    -webkit-animation: show 1s ease normal;
+}
+
+@-webkit-keyframes show{
+    from {
+        transform: translateY(-110%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
+.hidden_scrollbar::-webkit-scrollbar {
+	width: 0px;
+	
+}
+.hidden_scrollbar::-webkit-scrollbar-track {
+	/* background-color: rgb(255, 255, 255); */
+	-webkit-border-radius: 0px;
+}
+.hidden_scrollbar::-webkit-scrollbar-thumb:vertical {
+	background-color: rgb(142, 142, 142);
+	-webkit-border-radius: 0px;
+    -webkit-width: 0px;
+}
+.hidden_scrollbar::-webkit-scrollbar-thumb:vertical:hover {
+	/* background: rgba(0, 245, 255, 0.65); */
+	width: 0px;
+}
+
+.app-notification{	
+	background-color: whitesmoke;
+    /* box-shadow: 2px 2px 2px #ccc; */
+    padding: 10px 10px;
+    margin: 10px 10px;
+    border: 1px solid darkgray;
+}
+
+.app-notification p{
+	/*overflow: hidden;
+  	max-height: 3.6em; /* (Number of lines you want visible) * (line-height) */
+  	/*line-height: 1.2em;
+  	text-align: left;
+    text-justify: inter-word;*/
+}
+
+.logo-right{
+	margin: 0px 10px;
+	padding: 0px 0px;
+    font-size: 42px;
+    font-weight: 700;
+    font-family: serif;
+    color: #1263a9;
+}
+
+
+.dropdown-submenu{position:relative;}
+.dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+.dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+.dropdown-submenu:hover>a:after{border-left-color:#555;}
+.dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}

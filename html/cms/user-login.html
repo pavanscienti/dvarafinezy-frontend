@@ -1,0 +1,74 @@
+<html >
+  <head>    
+    <script type="text/javascript">
+	    $(document).ready(function() {
+	    	showLoader(false);
+		});
+	    function login(){	   
+	    	showLoader(true);	    	
+	    	var params={};
+	    	params["userid"]=document.getElementById('login-username').value;
+	    	params["password"]=document.getElementById('login-password').value;
+	    	params["option"]="login";
+			doAPIRequestWithLoader(EP.APIHandler.METHOD_POST, EP.APIHandler.login, params, function(response){
+				if(response.code == 200){
+		    		localStorage.setItem("user", JSON.stringify(response.data));
+		    		localStorage.token = response.data.access_token;
+		    		localStorage.user_email = response.data.user_email;
+		    		localStorage.user_type = response.data.user_type;
+		    		localStorage.user_id = response.data.user_id;
+					localStorage.branch_id = response.data.branch_id;
+					localStorage.user_name = response.data.user_name;
+					localStorage.branch_name = response.data.branch_name;
+					localStorage.emp_designation = response.data.emp_designation;
+					localStorage.region = response.data.region;
+					localStorage.token_expiry = response.data.token_expiry;
+					localStorage.office_name = response.data.office_name;
+					localStorage.app_access = JSON.stringify(response.data.app_access);	
+					localStorage.group = response.data.group;	
+					localStorage.data = JSON.stringify(response.data);	
+					localStorage.user_group = response.data.group;
+					localStorage.user = JSON.stringify(response.data);		
+					onLoginSuccess();
+	    		}else{
+	    			var data = response.error;
+	    			var errorArray = data[0];
+	    			sweetAlert("Login Failed!", errorArray, "error");
+	    			EP.API.hideLoading();
+	    		}
+			});
+			return false;
+	    }  
+    </script>    
+  </head>
+	  <body>	  	
+	  	<div class="container-fluid">
+			<div id="loginContainer" class="mainbox col-md-5 col-md-offset-3 col-sm-8 col-sm-offset-2" style="margin-top: 40px;">                       
+				<div class="panel panel-default" >						
+		        	<div class="panel-heading">
+		            	<div class="panel-title">Sign In</div>
+		            </div>
+		            <div style="padding-top:30px" class="panel-body" >
+		            	<div style="display:none;" id="login-error" class="login-error error-alert alert alert-danger col-sm-12"></div>				         
+						<form class="form-horizontal" role="form" onsubmit="return login()">
+			              	<div style="margin-bottom: 25px" class="input-group">
+			                	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+			                   	<input id="login-username" name="useremail" type="text" class="form-control" name="username" value="" placeholder="username" required />                                        
+			               	</div>
+			               	<div style="margin-bottom: 25px" class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			                  	<input id="login-password" name="password"  type="password" class="form-control" name="password" value="" placeholder="password" required />
+			                </div>
+							<div style="margin-top:10px" class="form-group">			                       
+			                	<div class="col-sm-12 controls text-right">
+			                    	<button type="submit" id="btn-login" class="btn btn-primary">Login</button>
+			                    </div>
+			             	</div>
+						</form> 
+					</div>                     
+				</div>  
+			</div>
+		</div>
+	</body>
+</html>
+	 

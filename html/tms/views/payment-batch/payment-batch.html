@@ -1,0 +1,104 @@
+<style>
+    .custom-datatable-btn {
+        margin-left: 2px !important;
+        margin-right: 2px !important;
+        border-radius: 3px !important;
+    }
+</style>
+
+<div class="container-fluid">
+	<div class="row">					    		
+		<div class="col-xs-12">
+			<div>
+				<div class="pull-left">					
+					<h4 style="margin-top: 0px;">Payment Batch Creation</h4>
+				</div>										    		
+   				<div class="pull-right form-inline" >
+					
+				</div>				
+			</div>
+		</div>
+	</div>
+	<hr>
+	<!--  Display the batch payment details -->
+	<div class="row payment-returns-view">					    		
+		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+			<div class="table-responsive">
+				<table id="tbl_payments" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th class="nowrap text-center" nowrap>S.No</th>
+							<th class="nowrap text-center" nowrap>Batch Id</th>
+                            <th class="nowrap text-center" nowrap>Disbursement Date</th>
+							<th class="nowrap text-center" nowrap>Branch Name</th>
+							<th class="nowrap text-center" nowrap>URN</th>
+							<th class="nowrap text-center" nowrap>Name</th>
+							<th class="nowrap text-center" nowrap>Loan Account No</th>
+                            <th class="nowrap text-center" nowrap>Amount</th>
+							<th class="nowrap text-center" nowrap>Bank Account No</th>
+							<th class="nowrap text-center" nowrap>IFSC Code</th>                            
+							<th class="nowrap text-center" nowrap>Status</th>
+							<th class="nowrap text-center" nowrap>Action</th>
+						</tr>
+					</thead>
+					<tbody>						
+					</tbody>
+				</table>		
+			</div>
+		</div>
+	</div>		
+</div>
+
+<div class="modal fade" id="findPaymentEntryModal" tabindex="-1" role="dialog" aria-labelledby="branchKeyTransferModal" aria-hidden="true" style="margin-top: -70px;">
+    <div class="modal-dialog modal-lg" style="width: 100%;margin: 0px;padding: 0px;" role="document">
+        <div class="modal-content" style="margin:0px;display: flex;flex-direction: column;height: 100vh;border-radius: 0px;">
+            <div class="modal-header">                
+                <h4 class="modal-title pull-left" id="exampleModalLabel">Find Payment Entry</h4>
+				<button type="button" class="close" data-dismiss="modal" style="opacity: 1;color: red;margin-left: 20px;">&times;</button>
+				<div class="pull-right form-inline" >
+					<div class="input-group">
+						<span class="input-group-addon dropdown-toggle"><b> Find By </b></span>
+						<select id="input_find_by_key" class="form-control input-sm">
+							<option value="" disabled>--select--</option>
+							<option value="urnNo">URN No</option>
+							<option value="name">Customer Name</option>
+							<option value="loanAccNo">Loan Account No</option>
+						</select>
+						<span class="input-group-addon"><b>No / Name</b></span>
+						<input type="text" id="input_find_by_value" class="form-control input-sm">
+						<a class="input-group-addon" id="btn_find_payment"><i class="glyphicon glyphicon-search"></i></a>
+					</div>
+				</div>
+					
+            </div>
+            <div class="modal-body" style="width: 100%; overflow-y:auto;">
+                <div>					
+					<div class="table-responsive">
+						<table id="tbl_search_payment_list" class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th class="nowrap text-center" nowrap></th>
+									<th class="nowrap text-center" nowrap>Batch ID</th>
+									<th class="nowrap text-center" nowrap>Disbursement Date</th>
+									<th class="nowrap text-center" nowrap>Branch Name</th>
+									<th class="nowrap text-center" nowrap>URN</th>
+									<th class="nowrap text-center" nowrap>Name</th>
+									<th class="nowrap text-center" nowrap>Loan Account No</th>
+									<th class="nowrap text-center" nowrap>Amount</th>
+									<th class="nowrap text-center" nowrap>Bank Account No</th>
+									<th class="nowrap text-center" nowrap>IFSC Code</th>                            
+									<th class="nowrap text-center" nowrap>Status</th>
+								</tr>
+							</thead>
+							<tbody>						
+							</tbody>
+						</table>		
+					</div>					
+				</div>
+				<button type="button" class="btn btn-sm btn-primary pull-right" onclick="addSelectedRowToPaymentListTable(this)">Add selected Row</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/tms/views/payment-batch/payment-batch.js"></script>

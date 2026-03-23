@@ -1,0 +1,135 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<div>
+				<h4 class="pull-left" style="margin-top: 0px;">Update Revers Transactions </h4>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<div class="pull-right form-inline" >
+				<div class="input-group input-group-sm" style="padding-right: 10px;">	 							
+					<span class="input-group-addon"><b>UTR No:</b></span>							      	
+					<input type="text" name="bm_mobile_no" id="bm_mobile_no" class="form-control input-sm" pattern="[0-9a-zA-Z]{10,10}" maxlength="10">	
+					<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+					<div class="help-block with-errors"></div>	  									
+				</div>
+				
+				<div class="input-group input-group-sm" style="padding-right: 10px;">	 							
+					<span class="input-group-addon"><b>Account NO:</b></span>							      	
+					<input type="text" name="bm_mobile_no" id="bm_mobile_no" class="form-control input-sm" pattern="[0-9a-zA-Z]{10,10}" maxlength="10">	
+					<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+					<div class="help-block with-errors"></div>	  									
+				</div>	
+
+				<div style="float:right;margin:0px 6px ;">
+					<button class="btn btn-sm btn-primary" onclick="getPaymentTrans()"> Search </button>
+				</div>	
+
+			</div>
+		</div>	
+	</div>
+	<hr>
+	<div class="row">					    		
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<div>
+				<div style="display:none;" id="error" class="error-content text-danger error-alert alert alert-danger col-xs-12"></div>
+				<div style="display:none;" id="success" class="error-content text-success success-alert alert alert-success col-xs-12"></div>   		
+			</div>
+		</div>
+	</div>		
+	<div class="row" id="paymentstrans" style="display:none;">
+		<div class="modal-dialog" style="width: auto ; margin: auto;">
+			<div class="modal-content">	
+								
+				<div class="modal-body">
+					<form role="form" id="uploadFileForm" class="form-horizontal">
+						<div class="container-fluid row">								    			    			    	
+							
+							<div class="col-xs-4">
+								<div class="form-group has-feedback" style="padding-right: 10px;">	 							
+									<label for="year" class="control-label"><span class="big">Batch ID : </span></label>							      	
+									<input type="text" name="batchid" id="batchid" value="166202" class="form-control" disabled>										
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group has-feedback" style="padding-right: 10px;">	 							
+									<label for="year" class="control-label"><span class="big">UTR No : </span></label>							      	
+									<input type="text" name="urtno" id="urtno" value="1356985020" class="form-control" disabled>	 									
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group has-feedback" style="padding-right: 10px;">	 							
+									<label for="year" class="control-label"><span class="big">Customer No : </span></label>							      	
+									<input type="text" name="customerno" id="customerno" value="321489414684" class="form-control" disabled>	
+								</div>
+							</div>
+
+							<div class="col-xs-4">
+								<div class="form-group has-feedback" style="padding-right: 10px;">	 							
+									<label for="year" class="control-label"><span class="big">Customer Name : </span></label>							      	
+									<input type="text" name="customername" id="customername" value="Dvara KGFS" class="form-control" disabled>	
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group has-feedback" style="padding-right: 10px;">	 							
+									<label for="customernumber" class="control-label"><span class="Big">Account Number : </span></label>							      	
+									<input type="text" name="customernumber" id="customernumber" value="2045866585545" class="form-control" disabled>	
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group has-feedback" style="padding-right: 10px;">	 							
+									<label for="ifsc" class="control-label"><span class="big">IFSC CODE : </span></label>							      	
+									<input type="text" name="ifsc" id="ifsc" value="FEDR004580" class="form-control" disabled>	
+								</div>
+							</div>
+
+							<div class="col-xs-4">
+								<div class="form-group has-feedback" style="padding-right: 10px;">	 							
+									<label for="loanamount" class="control-label"><span class="big">Loan Amount : </span></label>							      	
+									<input type="text" name="loanamount" id="loanamount" value="23,000" class="form-control" disabled >	
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group has-feedback" style="padding-right: 10px;">	 							
+									<label for="totalamount" class="control-label"><span class="big">Disb Amount/Total Amount : </span></label>							      	
+									<input type="text" name="totalamount" id="totalamount" value="23,500" class="form-control" disabled >
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group has-feedback" style="padding-right: 10px;">	 							
+									<label for="disbdate" class="control-label"><span class="big">Disb Date : </span></label>							      	
+									<input type="text" name="disbdate" id="disbdate" value="30/04/2023" class="form-control" disabled >	
+								</div>
+							</div>
+
+							<div class="col-xs-4">
+								<div class="form-group has-feedback" style="padding-right: 10px;">	 							
+									<label for="paymentstatus" class="control-label"><span class="big">Payment Status : </span></label>							      	
+									<input type="text" name="paymentstatus" id="paymentstatus" value="Success" class="form-control" disabled >	
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group has-feedback" style="padding-right: 10px;">	 							
+									<label for="bankrefno" class="control-label"><span class="big">Bank Ref No : </span></label>							      	
+									<input type="text" name="bankrefno" id="bankrefno" value="bks21654145654" class="form-control" disabled >	
+								</div>
+							</div>
+							
+							
+							
+							
+							<div class="form-group">
+								<div class="col-xs-12">		                  			 
+									<button type="submit" class="btn btn-primary btn-xs pull-right" onclick="uploadfile()">Update Failed</button>	                  		  		
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>				
+			</div>
+		</div>		
+	</div>	
+</div>	
+
+<script type="text/javascript" src="js/updateReversTrans.js"></script>
+	

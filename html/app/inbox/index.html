@@ -1,0 +1,128 @@
+<html>
+    <header>                
+        <link rel="stylesheet" type="text/css" href="/app/inbox/inbox.css">
+        <link rel="stylesheet" href="/lib/bootstrap/3.3.7/css/bootstrap.min.css" />		
+		<link rel="stylesheet" href="/lib/font-awesome/4.7.0/css/font-awesome.min.css" />
+		<script>
+			var CONFIG = {
+				API : {
+					V_FILES : '/vengine/web/file'		
+				}
+			};		
+			function getInboxData() {
+				try {
+					var jsonString = inboxJSInterface.getMessage();
+					renderInboxItem(JSON.parse(jsonString));
+				}catch(err){
+					document.getElementById("inbox_item_view_body").innerHTML = "Error: " + err;
+				}
+			}
+
+			function toggleInboxItem(src) {
+				src.parentNode.classList.toggle("inbox-item-collapse");
+				if(src.parentNode.classList.contains('inbox-item-collapse')){
+					src.querySelectorAll(".inbox-item-header-title")[0].style.display = 'block';
+					src.querySelectorAll(".from-to-show-more")[0].style.display = 'none';
+				} else {
+					src.querySelectorAll(".inbox-item-header-title")[0].style.display = 'none';
+					src.querySelectorAll(".from-to-show-more")[0].style.display = 'block';
+				}
+			}
+
+			function toggleSingleLine(src, event) {
+				// src.parentNode.classList.toggle("single-line");
+				event.stopPropagation();
+				if(src.innerHTML == 'show more') {
+					src.innerHTML = 'show less';
+					src.previousElementSibling.style.height = 'auto';
+				} else {
+					src.innerHTML = 'show more';
+					src.previousElementSibling.style.height = '1em';
+				}
+				return false;
+			}
+	
+			function renderInboxItem(json) {				
+				var html = "<div><h4 class=\"subject\"><b>" + json.subject +"</b></h4></div>";
+				for(var i=0, n=json.messages.length;i<n;i++) {
+					var msg = json.messages[i];
+					html += "<hr style=\"margin-top: 0px;margin-bottom: 10px;\" />"
+					     +" <div class=\"inbox-item "+ (i == n-1 ? "" : "inbox-item-collapse")+"\">"
+			 			 +"		<div class=\"inbox-item-header\" onclick=\"toggleInboxItem(this)\"> "
+						 +" 		<div class=\"inbox-item-from-to\" style=\"height:1em;\">From: "+ json.from.name +" (" + json.from.code +" ) <br>To: " + getToUser(json.to) + "</div>"
+						 +" 		<span class=\"from-to-show-more\" onclick=\"toggleSingleLine(this, event)\" style=\""+( i == n-1 ? "" : "display:none;")+"color:blue;font-size:14px;margin:4px 12px;\">show more</span>"
+						 +"			<div class=\"inbox-item-header-title\" style=\""+( i == n-1 ? "" : "display:block;")+"\"> erfds sdf sdf sdfsdf sdf" + msg.message.replace(/(<([^>]+)>)/g, "") + "</div>"
+						 +" 		<div class=\"inbox-item-header-timestamp\">"+new Date(json.created)+"</div>"
+						 +          renderMessageActions(msg.actions, msg.msg_id)  
+					 	 +"		</div>"
+						 +"		<div class=\"inbox-item-body\"><p>"+msg.message+"</p><br></div>"
+						 +      renderInboxItemAttachments(msg.attachments)						 
+ 						 +"	</div>"
+				}
+				html += "<div>" + renderActions(json.actions, json.messages[0].msg_id) + "</div>";
+				document.getElementById("inbox_item_view_body").innerHTML = html;
+			}
+			
+			function getToUser(users) {
+				var toUsersHtml = "";
+				for(var index=0;index<users.length;index++){
+					var to = users[index];
+					if(index != 0) {
+						toUsersHtml += ",&nbsp;"
+					}
+					toUsersHtml += "&nbsp;&nbsp;" +to.name + " (" + to.code + ")";
+				}
+				return toUsersHtml;
+			}
+			
+			function renderInboxItemAttachments(attachments) {
+			    if(attachments == null || attachments == "undefined") return "";
+			    var attachmentHtml = "<div class=\"inbox-item-attachment-list\"> "
+						   +"	<ul>";
+						   
+				for(var index=0;index<attachments.length;index++) {
+					var attachment = attachments[index];
+					var attachmentURL = attachment.file_link ? attachment.file_link : CONFIG.API.V_FILES + "?option=vcloud&file_name=" + encodeURIComponent(attachment.file_id);
+					attachmentHtml += "<li class=\"inbox-item-attachment\" onclick=\"inboxJSInterface.showAttachment('" + attachmentURL + "', '" + attachment.mime_type + "', '" + attachment.name + "')\">"
+						+" 		<div>"
+						+"			<img class=\"thump\" src=\"/lib/images/icon-attach.png\" />"
+						+"			<h6 class=\"name\">"+attachment.name+"</h6>"
+						+" 		</div>"
+						+" 	</li>";
+				}
+				return attachmentHtml +="</ul></div>";
+			}		
+	
+			function renderMessageActions(actions, msgId) {
+			    if(actions == null || actions == "undefined") return "";
+			    var actionHtml =  "<div class=\"inbox-item-action-list\">";
+			    for(var index=0;index<actions.length;index++) {
+			    	var action = actions[index];
+			    	if(!action.expires_on || action.expires_on > new Date().getMilliseconds()){
+			    		actionHtml += "<button class=\"inbox-item-action " + (action.style_class ||'') + "\" onclick=\"inboxJSInterface.showMsgActionDialog('" + action.actionType + "', " + index+ ",'"+ msgId + "')\">"+action.name+"</button>";
+			    	}
+				}
+				alert(actionHtml);
+			    return actionHtml += "</div>";
+			}
+
+			function renderActions(actions, msgId) {
+			    if(actions == null || actions == "undefined" || !actions.footer) return "";
+			    var actionHtml =  "<div class=\"inbox-item-action-list\">";
+			    for(var index=0;index<actions.footer.length;index++){
+			    	var action = actions.footer[index];
+			    	if(!action.expires_on || action.expires_on > new Date().getMilliseconds()){
+			    		actionHtml += "<button class=\"inbox-item-action " + (action.style_class ||'') + "\" onclick=\"inboxJSInterface.showActionDialog('" + action.actionType + "', " + index+ ",'"+ msgId + "')\">"+action.name+"</button>";
+			    	}
+			    }
+			    return actionHtml += "</div>";
+			}
+		</script>
+    </header>    
+    <!-- <script src="/lib/jquery/3.1.1/js/jquery.min.js"></script> -->
+    <body onload="getInboxData()">
+        <div id="inbox_container_full_view">
+            <div id="inbox_item_view_body">Loading... </div>
+        </div>
+    </body>
+</html>

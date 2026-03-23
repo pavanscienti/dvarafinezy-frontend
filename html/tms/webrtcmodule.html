@@ -1,0 +1,282 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div>
+                <h4 class="pull-left" style="margin-top: 0px;">WEB RTC (Video PD) Module</h4>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div>
+                <!-- <h4 class="pull-left" style="margin-top: 0px;">Branch Manager Leads Module</h4> -->
+                
+                
+                <div class="pull-right form-inline">
+
+                    <div class="input-group input-group-sm" style="margin:6px 0px 0px 5px;" >
+                        <span class="input-group-addon"><b>Storage type</b></span>
+                        <select id="input_filter_statues" class="form-control input-sm" style="min-width:50px;">
+                            <option value="completed">AWS S3</option>
+                            <option value="Pending">AWS Kinesis </option> 							
+                        </select>
+                    </div>
+
+                    <div style="float:right;margin:6px 0px 0px 5px;">
+                        <button class="btn btn-sm btn-primary" onclick="createSession()">Create Meeting</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div>
+                <div style="display:none;" id="error"
+                    class="error-content text-danger error-alert alert alert-danger col-xs-12"></div>
+                <div style="display:none;" id="success"
+                    class="error-content text-success success-alert alert alert-success col-xs-12"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12">
+
+        <div class="col-xs-4 col-sm-4 col-md-4" style="padding: 0px;">
+            <h4>User Data </h4>
+            <div class="container-fluid">
+                <form role="form" id="otpVerificationForm" class="form-horizontal">
+                    <input type="hidden" name="action" id="action">
+                    <input type="hidden" name="option" id="option">
+                    <input type="hidden" name="otp_auth_id" id="otp_auth_id">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small">Gull name :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required value="User name">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small">First name :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required value="user first name">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small">Last name :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required value="user last name ">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small">Father name :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required value="father name">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small">PAN :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required value="AAAAA0000A">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small">Aadhara  :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required value="0000 0000 0000">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small">Mobile No :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required value="00000 00000">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small">Address :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small">Shop Address :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small">Other Info  :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small">co-aplicant :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group has-feedback" style="padding-right: 10px;">
+                                <label for="otp_pin" class="control-label"><span class="small"> loan amount :
+                                    </span></label>
+                                <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                    pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                    data-error-msg="Enter valid OTP pin?" required>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                   
+                </form>
+            </div>
+        </div>
+
+        <div class="col-xs-8 col-sm-8 col-md-8" style="padding: 0px;">
+            <div id="iframeHolder" style="width: 100%;"></div>
+        </div>
+
+    </div>
+    <!-- <div class="row">					    		
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<div>
+				<div style="display:none;" id="error" class="error-content text-danger error-alert alert alert-danger col-xs-12"></div>
+				<div style="display:none;" id="success" class="error-content text-success success-alert alert alert-success col-xs-12"></div>   		
+			</div>
+		</div>
+	</div> -->
+
+    <!-- <div class="row">		
+		<div class="col-xs-12 controls text-right"> 
+			<button id="btn-create" type="button" class="btn btn-primary btn-sm"  onclick="updateLeadFulfilment()">Create</button>
+		</div>
+	</div> -->
+</div>
+
+<!-- OTP verification modal -->
+<div id="otpVerificationModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="col-md-11 modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="container-fluid">
+                    <form role="form" id="otpVerificationForm" class="form-horizontal">
+                        <input type="hidden" name="action" id="action">
+                        <input type="hidden" name="option" id="option">
+                        <input type="hidden" name="otp_auth_id" id="otp_auth_id">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group has-feedback" style="padding-right: 10px;">
+                                    <label for="otp_pin" class="control-label"><span class="small">Enter OTP :
+                                        </span></label>
+                                    <input type="text" name="otp_pin" id="otp_pin" class="form-control"
+                                        pattern="[0-9a-zA-Z]{5,8}" title="This field should not be left blank."
+                                        data-error-msg="Enter valid OTP pin?" required>
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-primary btn-xs pull-right">Verify OTP</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <script type="text/javascript">
+    $(function(){
+        $('#btn-meeting').click(function(){ 
+            if(!$('#iframe').length) {
+                    $('#iframeHolder').html('<iframe id="iframe" src="https://kyconboarding.cross-seven.com/main/other" width="700" height="450"></iframe>');
+            }
+        });   
+    });
+</script> -->
+
+
+<script type="text/javascript" src="js/webrtcmodule.js"></script>

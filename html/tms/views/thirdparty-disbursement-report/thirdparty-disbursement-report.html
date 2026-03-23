@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div>
+                <h4 class="pull-left" style="margin-top: 0px;">Third Party Disbursements Report</h4>
+                <div class="pull-right form-inline" >					
+					<div class="input-group input-group-sm" >
+						<span class="input-group-addon"><b>Category:</b></span>
+						<select id="cbs_name" class="form-control input-sm" style="min-width:50px;" onchange="reloadTrxns()">
+							<option value="all">ALL</option>
+							<option value="Gold">Gold</option>
+							<option value="Insurance">Insurance</option>
+						</select>
+					</div>
+					<!-- <div class="input-group input-group-sm" style="display:none;">
+						<span class="input-group-addon"><b>Branch Name:</b></span>
+						<select id="branch_name" class="form-control input-sm" style="min-width:50px;" onchange="reloadTrxns()">
+							<option value="ALL">ALL</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm" >
+						<span class="input-group-addon"><b>Date Filter By:</b></span>
+						<select id="date_filter_by" class="form-control input-sm" style="min-width:50px;" onchange="reloadTrxns()">
+							<option value="disbursement">Disb Date</option>
+							<option value="uploaded">uploaded Date</option>
+						</select>
+					</div> -->
+                	<div class="input-group input-group-sm input-daterange  datepicker" data-provide="datepicker" data-date-default-date="now" data-date-end-date="now" data-date-autoclose="true" data-date-format="yyyy-mm-dd">
+					    <div class="input-group-addon">
+					        <span class="glyphicon glyphicon-calendar"></span>
+					    </div>
+					    <input type="text" name="date_from" id="date_from" class="form-control input-sm custom-input-datepicker"   readonly>
+					    <div class="input-group-addon"> to </div>
+					    <input type="text" name="date_to" id="date_to" class="form-control input-sm custom-input-datepicker" readonly>
+					</div>                    
+                    <button class="btn btn-sm btn-primary" onclick="getReport()">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr style="margin-top: 0px;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="table-responsive">
+                <table id="tbl_disb_list" class="table table-striped table-bordered full-width table-hover show-pointer"
+                    style="cursor: pointer;" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+							<th nowrap class="text-nowrap text-center">S.No</th>
+                            <th nowrap class="text-nowrap text-center">Date</th>
+                            <th nowrap class="text-nowrap text-center">Voucher Type</th>
+                            <th nowrap class="text-nowrap text-center">Voucher No</th>
+                            <th nowrap class="text-nowrap text-center">Account Name</th>                            
+                            <th nowrap class="text-nowrap text-center">Debit Amount</th>
+                            <th nowrap class="text-nowrap text-center">Credit Amount</th>
+                            <th nowrap class="text-nowrap text-center">Cost Category</th>
+                            <th nowrap class="text-nowrap text-center">Cost Centre</th>
+                            <th nowrap class="text-nowrap text-center">Narration</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/tms/views/thirdparty-disbursement-report/thirdparty-disbursement-report.js"></script>
