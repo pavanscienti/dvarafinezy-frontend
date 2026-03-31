@@ -2,10 +2,40 @@
  * Login Handling Script
  */
 
+// ---------------------- Rate Limiting ----------------------
+var _loginAttempts = 0;
+var _loginBlockedUntil = 0;
+var MAX_LOGIN_ATTEMPTS = 5;
+var LOGIN_LOCKOUT_MS = 30000; // 30 seconds
+
+function isLoginBlocked() {
+	if (_loginBlockedUntil > Date.now()) {
+		var remaining = Math.ceil((_loginBlockedUntil - Date.now()) / 1000);
+		$('#login-error').html("Too many failed attempts. Please wait " + remaining + " seconds.").show();
+		showLoader(false);
+		return true;
+	}
+	return false;
+}
+
+function recordLoginFailure() {
+	_loginAttempts++;
+	if (_loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+		_loginBlockedUntil = Date.now() + LOGIN_LOCKOUT_MS;
+		_loginAttempts = 0;
+	}
+}
+
+function resetLoginAttempts() {
+	_loginAttempts = 0;
+	_loginBlockedUntil = 0;
+}
 
 // ---------------------- Normal Login ----------------------
 function doLogin() {
 	console.log("Function called ..... ");
+
+	if (isLoginBlocked()) return false;
 
 	showLoader(true);
 	var userName = $('#loginContainer input[name=username]');
@@ -26,10 +56,10 @@ function doLogin() {
 
 	error.hide();
 
-	var params = { 
-		'option': 'assistLogin', 
-		'username': userName.val(), 
-		'password': password.val() 
+	var params = {
+		'option': 'assistLogin',
+		'username': userName.val(),
+		'password': encryptPassword(password.val())
 	};
 
 	doAPIRequest(API.METHOD_POST, API.PATH_LOGIN, params, function (response) {
@@ -38,12 +68,15 @@ function doLogin() {
 		console.log("API response ", response);
 		if (response != null) {
 			if (response.status_code == 200) {
+				resetLoginAttempts();
 				saveUserData(response.data);
 				onLoginSuccess();
 			} else {
+				recordLoginFailure();
 				showErrorList(response.error);
 			}
 		} else {
+			recordLoginFailure();
 			error.html("Can't communicate with server").show();
 		}
 	});

@@ -17,7 +17,7 @@ function searchPayments() {
 		params['action']='find';
 		params['findVal'] = $("#findPaymentQuery").val();
 		params['findBy'] = findBy;		
-		doAPIRequestWithLoader(API.METHOD_GET, API.PATH_PAYMENT_APPROVALS, params, callbackViewSearchPayment);	
+		doAPIRequestWithLoader(API.METHOD_POST, API.PATH_PAYMENT_APPROVALS, params, callbackViewSearchPayment);
 	}
 	
 }

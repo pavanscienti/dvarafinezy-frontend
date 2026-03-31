@@ -14,8 +14,11 @@
 				</div>
 				<div style="margin-bottom: 25px" class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-					<input id="login-password" name="password" type="password" class="form-control" name="password"
+					<input id="login-password" name="password" type="password" class="form-control"
 						value="" placeholder="password" required />
+					<span class="input-group-addon" style="cursor:pointer;" onclick="togglePasswordVisibility()" title="Show/Hide password">
+						<i id="toggle-pw-icon" class="glyphicon glyphicon-eye-open"></i>
+					</span>
 				</div>
 				<div style="margin-top:10px" class="form-group">
 					<div class="col-sm-12 controls text-center">
@@ -52,4 +55,17 @@
 		</div>
 	</div>
 </div>
+<script>
+function togglePasswordVisibility() {
+	var pwField = document.getElementById('login-password');
+	var icon = document.getElementById('toggle-pw-icon');
+	if (pwField.type === 'password') {
+		pwField.type = 'text';
+		icon.className = 'glyphicon glyphicon-eye-close';
+	} else {
+		pwField.type = 'password';
+		icon.className = 'glyphicon glyphicon-eye-open';
+	}
+}
+</script>
 <script src="js/user-login.js"></script>
