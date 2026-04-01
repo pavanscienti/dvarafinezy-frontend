@@ -2,7 +2,7 @@ var currPageNo = 1;
 
 
 function searchPayments() {
-	
+	var findVal = $("#findPaymentQuery").val();
 	let findBy = [];
 	$("#findPaymentBy input[type=checkbox]:checked").each(function(){
 		findBy.push($(this).val());
@@ -10,12 +10,11 @@ function searchPayments() {
 	
 	if(findBy.length == 0){
 		alert("select find by options");
-	} else if(findBy.length == 0){
 		return;
 	} else {
 		var params = {};
 		params['action']='find';
-		params['findVal'] = $("#findPaymentQuery").val();
+		params['findVal'] = encryptValue(findVal);
 		params['findBy'] = findBy;		
 		doAPIRequestWithLoader(API.METHOD_POST, API.PATH_PAYMENT_APPROVALS, params, callbackViewSearchPayment);
 	}

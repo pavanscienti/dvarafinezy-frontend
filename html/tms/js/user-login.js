@@ -35,7 +35,7 @@ function resetLoginAttempts() {
 function doLogin() {
 	console.log("Function called ..... ");
 
-	if (isLoginBlocked()) return false;
+	// if (isLoginBlocked()) return false;
 
 	showLoader(true);
 	var userName = $('#loginContainer input[name=username]');
@@ -68,15 +68,17 @@ function doLogin() {
 		console.log("API response ", response);
 		if (response != null) {
 			if (response.status_code == 200) {
-				resetLoginAttempts();
+				// resetLoginAttempts();
 				saveUserData(response.data);
 				onLoginSuccess();
+			} else if (response.status_code == 429) {
+				error.html(response.error || "Too many login attempts").show();
 			} else {
-				recordLoginFailure();
+				// recordLoginFailure();
 				showErrorList(response.error);
 			}
 		} else {
-			recordLoginFailure();
+			// recordLoginFailure();
 			error.html("Can't communicate with server").show();
 		}
 	});
