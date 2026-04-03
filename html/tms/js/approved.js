@@ -54,7 +54,7 @@ function getBatchList() {
 					row += "<td>" + data.payment_category + "</td>" ;
 					row += "<td>" + data.transfer_type + "</td>" ;
 					row += "<td>" + data.remarks + "</td>" ;
-					row += "<td nowrap><h6>Created On&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + data.created.substr(0, 16) +"</h6>";
+					row += "<td nowrap><h6>Created On&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + (data.created ? data.created.substr(0, 16) : "-") +"</h6>";
 					if(data.maker_approved_time){
 						row += "<h6>Scheduled on&nbsp;" + data.maker_approved_time.substr(0, 16) + "</h6>" ;
 					} 
@@ -80,7 +80,7 @@ function getBatchList() {
 					// 	row += "<td align=\"center\">-</td>" ;
 					// }
 					row += "<td>" + data.status + "</td>" ;
-					row += "<td align=\"right\">" + data.amount.toMoney() + "</td>" ;
+					row += "<td align=\"right\">" + (data.amount != null ? data.amount.toMoney() : "-") + "</td>" ;
 					row += "<td nowrap>&nbsp;<a class=\"show-payments cur-pointer\" ><span class=\"glyphicon glyphicon-eye-open\" onclick=\"viewPaymentDetails('" + data.batch_id + "')\"></span></a>&nbsp;";
 					row += "&nbsp;<a class=\"show-payments cur-pointer\" ><span class=\"glyphicon glyphicon-stats\" onclick=\"viewPaymentSummary('" + data.batch_id + "')\"></span></a>&nbsp;" ;				
 					row += "&nbsp;<a class=\"show-payments cur-pointer\" ><span class=\"glyphicon glyphicon-download\" onclick=\"downloadPaymentDetails('" + data.batch_id + "')\"></span></a>&nbsp;" ;				
@@ -117,7 +117,7 @@ function viewPaymentSummary(batchId){
 			var content = "<div> <table class=\"table  table-striped table-bordered \">";
 			content += "<tr><th align=\"center\">Status</th><th align=\"center\">No of Payments</th><th align=\"center\">Amount</th></tr>";
 			for(var i=0;json.data.length > i;i++){
-				content += "<tr><td>" + json.data[i].status + "</td><td>" + json.data[i].count + "</td><td  align=\"right\">" + json.data[i].amount.toMoney() + "</td></tr>";
+				content += "<tr><td>" + json.data[i].status + "</td><td>" + json.data[i].count + "</td><td  align=\"right\">" + (json.data[i].amount != null ? json.data[i].amount.toMoney() : "-") + "</td></tr>";
 			}
 			content += "</table></div>";
 			showPopup(true, "Payment Summary", content);

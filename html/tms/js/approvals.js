@@ -68,7 +68,7 @@ function getBatchList() {
 					row += "<td>" + data.payment_category + "</td>";
 					row += "<td>" + data.transfer_type+ "</td>";
 					row += "<td>" + data.remarks + "</td>" ;
-					row += "<td>" + data.created.substr(0, 16) + "</td>" ;
+					row += "<td>" + (data.created ? data.created.substr(0, 16) : "-") + "</td>" ;
 					if(data.maker_approved_time){
 						row += "<td>" + data.maker_approved_time.substr(0, 16) + "</td>" ;
 					}
@@ -76,7 +76,7 @@ function getBatchList() {
 						row += "<td>" + data.checker_approved_time.substr(0, 16) + "</td>" ;
 					}
 					row += "<td>" + data.status + "</td>" ;
-					row += "<td align=\"right\">" + data.amount.toMoney() + "</td>" ;
+					row += "<td align=\"right\">" + (data.amount != null ? data.amount.toMoney() : "-") + "</td>" ;
 					if(!localStorage.getItem('linkNavMenu') || !localStorage.getItem('linkNavMenu').includes('maker')){
 						if(data.maker_notes){
 							row += "<td>" + data.maker_notes + "</td>" ;
@@ -366,7 +366,7 @@ function callbackViewPaymentDetails(json){
 				row += "<td nowarp>" + data.account_name + "</td>" ;
 				row += "<td nowarp>" + data.account_no + "</td>" ;	
 				row += "<td nowarp>" + data.ifsc_code + "</td>" ;		
-				row += "<td nowarp align=\"right\">" + data.amount.toMoney() + "</td>" ;
+				row += "<td nowarp align=\"right\">" + (data.amount != null ? data.amount.toMoney() : "-") + "</td>" ;
 				row += "<td nowarp align=\"right\">" + (data.disbursed_loan_amount ? data.disbursed_loan_amount.toMoney() : "") + "</td>" ;
 				row += "<td nowarp align=\"right\">" + (data.insurance_fee ? data.insurance_fee.toMoney() : "") + "</td>" ;	
 				row += "<td nowarp align=\"right\">" + (data.processing_fee ? data.processing_fee.toMoney() : "") + "</td>" ;

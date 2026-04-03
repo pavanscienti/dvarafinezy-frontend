@@ -63,7 +63,7 @@ function getBatchList() {
 					}				
 					row += "<td>" + cancelledOn + "</td>" ;
 					row += "<td>" + (data.reject_reason ? data.reject_reason : "-") + "</td>" ;
-					row += "<td align=\"right\">" + data.amount.toMoney() + "</td>" ;
+					row += "<td align=\"right\">" + (data.amount != null ? data.amount.toMoney() : "-") + "</td>" ;
 					row += "<td align=\"center\">&nbsp;&nbsp;<a class=\"show-payments\" ><span class=\"glyphicon glyphicon-eye-open\" onclick=\"viewPaymentDetails('" + data.batch_id + "')\"></span></a>";
 					row += "&nbsp;&nbsp;<a class=\"show-payments\" ><span class=\"glyphicon glyphicon-download\" onclick=\"downloadPaymentDetails('" + data.batch_id + "')\"></span></a>&nbsp;&nbsp;</td>" ;
 					row += "</tr>";			
@@ -117,7 +117,7 @@ function callbackViewPaymentDetails(json){
 				row += "<td nowarp>" + data.account_name + "</td>" ;
 				row += "<td nowarp>" + data.account_no + "</td>" ;	
 				row += "<td nowarp>" + data.ifsc_code + "</td>" ;				
-				row += "<td nowarp align=\"right\">" + data.amount.toMoney() + "</td>" ;
+				row += "<td nowarp align=\"right\">" + (data.amount != null ? data.amount.toMoney() : "-") + "</td>" ;
 				row += "<td nowarp align=\"right\">" + (data.disbursed_loan_amount ? data.disbursed_loan_amount.toMoney() : "") + "</td>" ;
 				row += "<td nowarp align=\"right\">" + (data.insurance_fee ? data.insurance_fee.toMoney() : "") + "</td>" ;	
 				row += "<td nowarp align=\"right\">" + (data.processing_fee ? data.processing_fee.toMoney() : "") + "</td>" ;

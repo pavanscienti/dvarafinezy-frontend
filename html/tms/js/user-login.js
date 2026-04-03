@@ -116,7 +116,8 @@ function doSamlLogin(email, firstName, lastName, isAuth  ) {
 // ---------------------- SSO Redirect Handler ----------------------
 function doSSOLogin() {
 	// window.open('https://finezyuat.dvarakgfs.com/login', 'authWindow', 'width=600,height=400');
-	 window.location.href = "https://finezy.dvarakgfs.com/login";
+	//  window.location.href = "https://finezy.dvarakgfs.com/login";
+	window.location.href = "https://finezyuat.dvarakgfs.com/login";
 	// window.location.href = "https://finezyuat.dvarakgfs.com/login/saml2/authenticate/google-saml";
 	// https://finezyuat.dvarakgfs.com/login/saml2/sso/
 	// window.location.href = "https://finezyuat.dvarakgfs.com/tms"
